@@ -1,0 +1,57 @@
+/*content "md"*/
+@media screen and (max-width:1200px){
+}
+@media screen and (max-width:1080px){
+}
+/*content "sm"*/
+@media screen and (max-width:992px){
+}
+@media screen and (max-width:858px){
+}
+/*content "xs"*/
+@media screen and (max-width:768px){
+	.navbar .dropdown.profile .dropdown-menu {
+		width: 250px !important;
+		margin-left: -190% !important;
+	}
+
+	#lilanguages {
+	    top: 0px !important;
+	}
+	
+    .dataTables_wrapper div:nth-child(1) div{
+        width: 40% !important;
+    }
+
+    .dataTables_wrapper div:nth-child(1) div:nth-child(2){
+        left: 49% !important;
+        top: -33px !important;
+    }
+
+    .dataTables_filter .input-sm{
+        width: 100% !important;
+    }
+
+    .app-container .content-container .container .container-fluid{
+        margin-left: 0% !important;
+    }
+
+    .dataTables_wrapper  table {
+        width: 97% !important;
+        left: -1% !important;
+        position: relative !important;
+    }
+}
+
+/*content "menores a xs"*/
+@media screen and (max-width:640px){
+    .dataTables_wrapper div:nth-child(1) div:nth-child(2){
+        left: 69% !important;
+    }
+}
+@media screen and (max-width:480px){
+    .app-container .content-container .container .container-fluid .card{
+        width: 105% !important;
+        margin-left: -2% !important;
+    }
+}
