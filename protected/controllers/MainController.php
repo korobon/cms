@@ -8,6 +8,13 @@ class MainController extends Controller
 	 */
 	public $layout='//layouts/column2';
 
+	public function init()
+	{
+	   Yii::app()->theme = 'portal';
+
+	   parent::init();
+	}
+
 	/**
 	 * @return array action filters
 	 */
@@ -73,33 +80,47 @@ class MainController extends Controller
 			if($model->save()){
 
 				//create table content
-				$sqlQuery = "CREATE TABLE IF NOT EXISTS content_main".$model->id." (id int(11) NOT NULL AUTO_INCREMENT,title TEXT not null, body TEXT not null, type varchar(10) not null, id_category int(11) NOT NULL,PRIMARY KEY (id),KEY id_category (id_category))";
+				$tableModel = "content_main".$model->id;
+				$sqlQuery = "CREATE TABLE IF NOT EXISTS $tableModel (id int(11) NOT NULL AUTO_INCREMENT,title TEXT not null, body TEXT not null, type varchar(10) not null, id_category int(11) NOT NULL,PRIMARY KEY (id),KEY id_category (id_category))";
 				$sqlCommand = Yii::app()->db->createCommand($sqlQuery);
 				$sqlCommand->execute();
-				/*
+				
 				//create models
-                if(!file_exists (Yii::app()->baseUrl."/protected/models/app.php")){
+				$ruta = dirname(dirname(__DIR__))."/protected/models/";
+				$fileModel = "ContentMain".$model->id;
+                if(!file_exists ($ruta.$fileModel.".php")){
 
                     //creamos el archivo contenedor del modelo
-                    $nuevoarchivo = fopen(Yii::app()->baseUrl.'/protected/models/app.php', "w+");
+                    $nuevoarchivo = fopen($ruta.$fileModel.'.php', "w+");
 
                     //escribimos la cabecera del archivo
-                    fwrite($nuevoarchivo,"<?php class Slider extends CActiveRecord
-						{
-							public function tableName()
-							{
-								return 'slider';
-							}
-							public static function model($className=__CLASS__)
-							{
-								return parent::model($className);
-							}
-						}?>");
+                    fwrite($nuevoarchivo,"
+<?php 
+class $fileModel extends CActiveRecord
+{
+
+	public function tableName()
+	{
+		return '$tableModel';
+	}
+
+");	
+                    
+                    //escribimos las funciones base para los modelos dinamicos
+					$allLineas = file($ruta."BaseContentMain.txt");
+					foreach( $allLineas as $linea ){
+        				fwrite($nuevoarchivo,$linea);  
+					}
+
+					//escribimos el pie del archivo
+                    fwrite($nuevoarchivo,"
+}
+?>");	
 
                     //cerramos el archivo
                     fclose($nuevoarchivo);
                 }
-				*/
+				
 				//views
 				$this->redirect(array('view','id'=>$model->id));
 			}
